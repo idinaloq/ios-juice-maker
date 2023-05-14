@@ -17,7 +17,7 @@ class FruitStore {
         for (fruit, quantity) in fruits {
             if let stock = self.stock[fruit] {
                 self.stock[fruit] = stock - quantity
-                print("\(self.stock[fruit]!)남은수량 \(stock) 재고 \(quantity) 필요수량")
+//                print("\(self.stock[fruit]!)남은수량 \(stock) 재고 \(quantity) 필요수량")
             }
         }
     }
