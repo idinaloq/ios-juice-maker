@@ -5,7 +5,7 @@
 //
 
 class FruitStore {
-    var stock: [Fruit: Int] = [
+    private var stock: [Fruit: Int] = [
         .strawBerry: 10,
         .banana: 10,
         .pineApple: 10,
