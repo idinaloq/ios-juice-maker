@@ -7,7 +7,7 @@
 import UIKit
 
 struct JuiceMaker {
-    let fruitStore: FruitStore = FruitStore()
+    let fruitStore: FruitStore = FruitStore.shard
     private var recipe: [Fruit: Int] = [:]
     
     mutating func order(_ juice: Juice) -> Bool {

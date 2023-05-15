@@ -28,10 +28,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      showStock()
+        showStock()
     }
-    
+        
     func showStock() {
+        
         guard let stock = juiceMaker.fruitStore.stock[.strawBerry] else { return }
         strawBerryStock.text = "\(stock)"
         
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
     
     @IBAction func strawBerryJuice(_ sender: Any) {
         if juiceMaker.order(.strawBerryJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -59,6 +61,7 @@ class ViewController: UIViewController {
     
     @IBAction func strawBerryBananaJuice(_ sender: Any) {
         if juiceMaker.order(.strawBerryBananaJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -67,6 +70,7 @@ class ViewController: UIViewController {
     
     @IBAction func bananaJuice(_ sender: Any) {
         if juiceMaker.order(.bananaJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -75,6 +79,7 @@ class ViewController: UIViewController {
     
     @IBAction func pineappleJuice(_ sender: Any) {
         if juiceMaker.order(.pineAppleJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -83,6 +88,7 @@ class ViewController: UIViewController {
     
     @IBAction func kiwiJuice(_ sender: Any) {
         if juiceMaker.order(.kiwiJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -91,6 +97,7 @@ class ViewController: UIViewController {
     
     @IBAction func mangoKiwiJuice(_ sender: Any) {
         if juiceMaker.order(.mangoKiwiJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -99,6 +106,7 @@ class ViewController: UIViewController {
     
     @IBAction func mangoJuice(_ sender: Any) {
         if juiceMaker.order(.mangoJuice) == true {
+            showStock()
             재고있을때()
         } else {
             재고없을때()
@@ -129,16 +137,20 @@ class ViewController: UIViewController {
     }
     
     func secondViewPresent() {
-        guard let changeStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "ChangeStockViewController") else { return }
+        guard let changeStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "ChangeStockViewController") as? ChangeStockViewController else { return }
         let navigationController = UINavigationController(rootViewController: changeStockViewController)
+        changeStockViewController.delegate = self
         self.present(navigationController, animated: true)
     }
     
     
     @IBAction func changeStock(_ sender: Any) {
-        guard let changeStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "ChangeStockViewController") else { return }
-        let navigationController = UINavigationController(rootViewController: changeStockViewController)
-        self.present(navigationController, animated: true)
+       secondViewPresent()
     }
 }
 
+extension ViewController: addDelegate {
+    func addStock(_ value: String?) {
+        showStock()
+    }
+}

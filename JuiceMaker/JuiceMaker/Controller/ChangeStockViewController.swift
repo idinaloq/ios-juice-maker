@@ -7,8 +7,15 @@
 
 import UIKit
 
-class ChangeStockViewController: UIViewController {
+protocol addDelegate: AnyObject {
+    func addStock(_ value: String?)
+}
 
+class ChangeStockViewController: UIViewController {
+    var fruitStore: FruitStore = FruitStore.shard
+
+    weak var delegate: addDelegate?
+    
     @IBOutlet weak var changeConfirm: UIBarButtonItem!
     @IBOutlet weak var strawBerry: UILabel!
     @IBOutlet weak var banana: UILabel!
@@ -24,16 +31,19 @@ class ChangeStockViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        strawBerryStepper.value = Double(fruitStore.stock[.strawBerry]!)
+        strawBerry.text = fruitStore.stock[.strawBerry]?.description
         // Do any additional setup after loading the view.
     }
     
     @IBAction func changeConfirm(_ sender: Any) {
-        
+        fruitStore.stock[.strawBerry] = Int(strawBerry.text!)
+        self.delegate?.addStock(self.strawBerry.text)
         self.dismiss(animated: true)
     }
     
     @IBAction func strawBerryStepper(_ sender: UIStepper) {
-        strawBerry.text = Int(sender.value).description
+        strawBerry.text = "\(Int(sender.value))"
     }
     
     @IBAction func bananaStepper(_ sender: UIStepper) {

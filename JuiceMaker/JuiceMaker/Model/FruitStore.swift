@@ -5,13 +5,19 @@
 //
 
 class FruitStore {
-    var stock: [Fruit: Int] = [
+    static var shard = FruitStore()
+        private init() {}
+    private var stock: [Fruit: Int] = [
         .strawBerry: 15,
         .banana: 11,
         .pineApple: 12,
         .kiwi: 13,
         .mango: 14
     ]
+    
+    func fruitStock() -> [Fruit: Int] {
+        return self.stock
+    }
     
     func decreaseStock(with fruits: [Fruit: Int]) {
         for (fruit, quantity) in fruits {
