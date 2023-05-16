@@ -34,36 +34,56 @@ class ChangeStockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showFruitStock()
+        showFruitStockStepper()
     }
     
     func showFruitStock() {
         stock = fruitStore.fruitStock()
         
-        guard let strawBerryStock = stock[.strawBerry] else { return }
-        guard let bananaStock = stock[.banana] else { return }
-        guard let pineappleStock = stock[.pineApple] else { return }
-        guard let kiwiStock = stock[.kiwi] else { return }
-        guard let mangoStock = stock[.mango] else { return }
+        let fruitStock: [Fruit : UILabel] = [
+            .strawBerry: strawBerryLabel,
+            .banana: bananaLabel,
+            .pineApple: pineappleLabel,
+            .kiwi: kiwiLabel,
+            .mango: mangoLabel
+        ]
         
-        strawBerryStepper.value = Double(strawBerryStock)
-        bananaStepper.value = Double(bananaStock)
-        pineappleStepper.value = Double(pineappleStock)
-        kiwiStepper.value = Double(kiwiStock)
-        mangoStepper.value = Double(mangoStock)
+        for (fruit, label) in fruitStock {
+            guard let stock = stock[fruit] else { return }
+            label.text = String(stock)
+        }
+    }
+    
+    func showFruitStockStepper() {
+        stock = fruitStore.fruitStock()
+        let fruitStockStepper: [Fruit : UIStepper] = [
+            .strawBerry: strawBerryStepper,
+            .banana: bananaStepper,
+            .pineApple: pineappleStepper,
+            .kiwi: kiwiStepper,
+            .mango: mangoStepper
+        ]
         
-        strawBerryLabel.text = stock[.strawBerry]?.description
-        bananaLabel.text = stock[.banana]?.description
-        pineappleLabel.text = stock[.pineApple]?.description
-        kiwiLabel.text = stock[.kiwi]?.description
-        mangoLabel.text = stock[.mango]?.description
+        for (fruit, stepper) in fruitStockStepper {
+            guard let stock = stock[fruit] else { return }
+            stepper.value = Double(stock)
+        }
     }
     
     @IBAction func changeConfirm(_ sender: Any) {
-        changeStock(for: .strawBerry, with: strawBerryLabel)
-        changeStock(for: .banana, with: bananaLabel)
-        changeStock(for: .pineApple, with: pineappleLabel)
-        changeStock(for: .kiwi, with: kiwiLabel)
-        changeStock(for: .mango, with: mangoLabel)
+        
+        let fruitLabels: [Fruit: UILabel] = [
+            .strawBerry: strawBerryLabel,
+            .banana: bananaLabel,
+            .pineApple: pineappleLabel,
+            .kiwi: kiwiLabel,
+            .mango: mangoLabel
+        ]
+        
+           for (fruit, label) in fruitLabels {
+               changeStock(for: fruit, with: label)
+           }
+        
         self.delegate?.addStock(self.stock)
         self.dismiss(animated: true)
     }
@@ -72,10 +92,7 @@ class ChangeStockViewController: UIViewController {
         guard let stock = self.stock[fruit] else { return }
         guard let text = label.text, let intText = Int(text) else { return }
 
-        var newStock = stock
-        newStock = intText
-
-        fruitStore.decreaseStock(with: [fruit: -newStock - -stock])
+        fruitStore.decreaseStock(with: [fruit: -intText - -stock])
     }
     
     @IBAction func strawBerryStepper(_ sender: UIStepper) {

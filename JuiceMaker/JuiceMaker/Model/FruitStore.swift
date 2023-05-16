@@ -16,7 +16,6 @@ class FruitStore {
     ]
     
     func fruitStock() -> [Fruit: Int] {
-        
         return self.stock
     }
     
