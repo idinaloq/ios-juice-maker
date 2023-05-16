@@ -57,80 +57,45 @@ class ChangeStockViewController: UIViewController {
         kiwiLabel.text = stock[.kiwi]?.description
         mangoLabel.text = stock[.mango]?.description
     }
-        
+    
     @IBAction func changeConfirm(_ sender: Any) {
-        changeStrawBerry()
-        changeBanana()
-        changePineapple()
-        changeKiwi()
-        changeMango()
+        changeStock(for: .strawBerry, with: strawBerryLabel)
+        changeStock(for: .banana, with: bananaLabel)
+        changeStock(for: .pineApple, with: pineappleLabel)
+        changeStock(for: .kiwi, with: kiwiLabel)
+        changeStock(for: .mango, with: mangoLabel)
         self.delegate?.addStock(self.stock)
         self.dismiss(animated: true)
+    }
+    
+    func changeStock(for fruit: Fruit, with label: UILabel) {
+        guard let stock = self.stock[fruit] else { return }
+        guard let text = label.text, let intText = Int(text) else { return }
+
+        var newStock = stock
+        newStock = intText
+
+        fruitStore.decreaseStock(with: [fruit: -newStock - -stock])
     }
     
     @IBAction func strawBerryStepper(_ sender: UIStepper) {
         strawBerryLabel.text = "\(Int(sender.value))"
     }
     
-    func changeStrawBerry() {
-        guard let stock = self.stock[.strawBerry] else { return }
-        guard let strawBerryText = strawBerryLabel.text, let intValue = Int(strawBerryText) else { return }
-        var newStock = stock
-        newStock = intValue
-        
-        fruitStore.decreaseStock(with: [.strawBerry: -newStock - -self.stock[.strawBerry]!])
-    }
-    
     @IBAction func bananaStepper(_ sender: UIStepper) {
         bananaLabel.text = Int(sender.value).description
     }
-    
-    func changeBanana() {
-        guard let stock = self.stock[.banana] else { return }
-        guard let bananaText = bananaLabel.text, let intValue = Int(bananaText) else { return }
-        var newStock = stock
-        newStock = intValue
         
-        fruitStore.decreaseStock(with: [.banana: -newStock - -self.stock[.banana]!])
-    }
-    
     @IBAction func pineappleStepper(_ sender: UIStepper) {
         pineappleLabel.text = Int(sender.value).description
     }
-    
-    func changePineapple() {
-        guard let stock = self.stock[.pineApple] else { return }
-        guard let pineappleText = pineappleLabel.text, let intValue = Int(pineappleText) else { return }
-        var newStock = stock
-        newStock = intValue
         
-        fruitStore.decreaseStock(with: [.pineApple: -newStock - -self.stock[.pineApple]!])
-    }
-    
     @IBAction func kiwiStepper(_ sender: UIStepper) {
         kiwiLabel.text = Int(sender.value).description
     }
-    
-    func changeKiwi() {
-        guard let stock = self.stock[.kiwi] else { return }
-        guard let kiwiText = kiwiLabel.text, let intValue = Int(kiwiText) else { return }
-        var newStock = stock
-        newStock = intValue
         
-        fruitStore.decreaseStock(with: [.kiwi: -newStock - -self.stock[.kiwi]!])
-    }
-    
     @IBAction func mangoStepper(_ sender: UIStepper) {
         mangoLabel.text = Int(sender.value).description
-    }
-    
-    func changeMango() {
-        guard let stock = self.stock[.kiwi] else { return }
-        guard let mangoText = mangoLabel.text, let intValue = Int(mangoText) else { return }
-        var newStock = stock
-        newStock = intValue
-        
-        fruitStore.decreaseStock(with: [.mango: -newStock - -self.stock[.mango]!])
     }
 }
 
