@@ -6,8 +6,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    var juiceMaker = JuiceMaker()
+class ViewController: UIViewController, addDelegate {
+    var juiceMaker: JuiceMaker = JuiceMaker()
+    
+    var stock: [Fruit: Int] = [:]
+
     
     @IBOutlet weak var strawBerryJuice: UIButton!
     @IBOutlet weak var strawBerryBananaJuice: UIButton!
@@ -30,23 +33,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         showStock()
     }
+    
+
         
     func showStock() {
+        stock = juiceMaker.fruitStore.fruitStock()
+        strawBerryStock.text = self.stock[.strawBerry]?.description
         
-        guard let stock = juiceMaker.fruitStore.stock[.strawBerry] else { return }
-        strawBerryStock.text = "\(stock)"
+        bananaStock.text = self.stock[.banana]?.description
         
-        guard let stock = juiceMaker.fruitStore.stock[.banana] else { return }
-        bananaStock.text = "\(stock)"
+        pineappleStock.text = self.stock[.pineApple]?.description
         
-        guard let stock = juiceMaker.fruitStore.stock[.pineApple] else { return }
-        pineappleStock.text = "\(stock)"
-        
-        guard let stock = juiceMaker.fruitStore.stock[.kiwi] else { return }
-        kiwiStock.text = "\(stock)"
-        
-        guard let stock = juiceMaker.fruitStore.stock[.mango] else { return }
-        mangoStock.text = "\(stock)"
+        kiwiStock.text = self.stock[.kiwi]?.description
+
+        mangoStock.text = self.stock[.mango]?.description
     }
     
     
@@ -113,8 +113,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
     func 재고있을때() {
         let alert = UIAlertController(title: "쥬스 나왔습니다.", message: "맛있게 드세요!", preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler :nil)
@@ -147,9 +145,7 @@ class ViewController: UIViewController {
     @IBAction func changeStock(_ sender: Any) {
        secondViewPresent()
     }
-}
-
-extension ViewController: addDelegate {
+    
     func addStock(_ value: String?) {
         showStock()
     }

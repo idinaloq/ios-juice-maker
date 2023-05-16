@@ -13,7 +13,10 @@ protocol addDelegate: AnyObject {
 
 class ChangeStockViewController: UIViewController {
     var fruitStore: FruitStore = FruitStore.shard
-
+    
+    var juiceMaker: JuiceMaker = JuiceMaker()
+    var stock: [Fruit: Int] = [:]
+    
     weak var delegate: addDelegate?
     
     @IBOutlet weak var changeConfirm: UIBarButtonItem!
@@ -31,13 +34,14 @@ class ChangeStockViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        strawBerryStepper.value = Double(fruitStore.stock[.strawBerry]!)
-        strawBerry.text = fruitStore.stock[.strawBerry]?.description
+        stock = juiceMaker.fruitStore.fruitStock()
+        strawBerryStepper.value = Double(self.stock[.strawBerry]!)
+        strawBerry.text = self.stock[.strawBerry]?.description
         // Do any additional setup after loading the view.
     }
     
     @IBAction func changeConfirm(_ sender: Any) {
-        fruitStore.stock[.strawBerry] = Int(strawBerry.text!)
+        self.stock[.strawBerry] = Int(strawBerry.text!)
         self.delegate?.addStock(self.strawBerry.text)
         self.dismiss(animated: true)
     }
@@ -61,6 +65,5 @@ class ChangeStockViewController: UIViewController {
     @IBAction func mangoStepper(_ sender: UIStepper) {
         mango.text = Int(sender.value).description
     }
-    
-    
 }
+
