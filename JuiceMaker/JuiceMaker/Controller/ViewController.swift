@@ -7,46 +7,42 @@
 import UIKit
 
 class ViewController: UIViewController, addDelegate {
+    
     var juiceMaker: JuiceMaker = JuiceMaker()
     
     var stock: [Fruit: Int] = [:]
 
+    @IBOutlet weak var strawBerryJuiceButton: UIButton!
+    @IBOutlet weak var strawBerryBananaJuiceButton: UIButton!
+    @IBOutlet weak var bananaJuiceButton: UIButton!
+    @IBOutlet weak var pineappleJuiceButton: UIButton!
+    @IBOutlet weak var kiwiJuiceButton: UIButton!
+    @IBOutlet weak var mangoKiwiJuiceButton: UIButton!
+    @IBOutlet weak var mangoJuiceButton: UIButton!
+    @IBOutlet weak var changeStockButton: UIBarButtonItem!
     
-    @IBOutlet weak var strawBerryJuice: UIButton!
-    @IBOutlet weak var strawBerryBananaJuice: UIButton!
-    @IBOutlet weak var bananaJuice: UIButton!
-    @IBOutlet weak var pineappleJuice: UIButton!
-    @IBOutlet weak var kiwiJuice: UIButton!
-    @IBOutlet weak var mangoKiwiJuice: UIButton!
-    @IBOutlet weak var mangoJuice: UIButton!
-    @IBOutlet weak var changeStock: UIBarButtonItem!
-    
-    @IBOutlet weak var strawBerryStock: UILabel!
-    @IBOutlet weak var bananaStock: UILabel!
-    @IBOutlet weak var pineappleStock: UILabel!
-    @IBOutlet weak var kiwiStock: UILabel!
-    @IBOutlet weak var mangoStock: UILabel!
-    
-    @IBOutlet var stocks: [UILabel]!
+    @IBOutlet weak var strawBerryStockLabel: UILabel!
+    @IBOutlet weak var bananaStockLabel: UILabel!
+    @IBOutlet weak var pineappleStockLabel: UILabel!
+    @IBOutlet weak var kiwiStockLabel: UILabel!
+    @IBOutlet weak var mangoStockLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showStock()
     }
-    
 
-        
     func showStock() {
         stock = juiceMaker.fruitStore.fruitStock()
-        strawBerryStock.text = self.stock[.strawBerry]?.description
+        strawBerryStockLabel.text = self.stock[.strawBerry]?.description
         
-        bananaStock.text = self.stock[.banana]?.description
+        bananaStockLabel.text = self.stock[.banana]?.description
         
-        pineappleStock.text = self.stock[.pineApple]?.description
+        pineappleStockLabel.text = self.stock[.pineApple]?.description
         
-        kiwiStock.text = self.stock[.kiwi]?.description
+        kiwiStockLabel.text = self.stock[.kiwi]?.description
 
-        mangoStock.text = self.stock[.mango]?.description
+        mangoStockLabel.text = self.stock[.mango]?.description
     }
     
     
@@ -146,7 +142,7 @@ class ViewController: UIViewController, addDelegate {
        secondViewPresent()
     }
     
-    func addStock(_ value: String?) {
+    func addStock(_ value: [Fruit : Int]) {
         showStock()
     }
 }
